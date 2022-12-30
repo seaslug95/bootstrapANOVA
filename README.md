@@ -8,7 +8,9 @@ $$F = \frac{\text{Variance between sample's means}}{\text{Variance within sample
 
 ### Demonstration
 $$\text{SS(within)} = \sum_{i=1}^m \sum_{j=1}^{n_i} (X_{ij} - \bar X_{i})^2$$
+
 $$\text{SS(between)} = \sum_{i=1}^m \sum_{j=1}^{n_i} (\bar X_{i} - \bar X)^2$$
+
 $$\text{SS(total)} = \sum_{i=1}^m \sum_{j=1}^{n_i} (X_{ij} - \bar X)^2$$
 
 Where m is the number of groups we compare, ${n_i}$ the number of samples in group i, $\bar X_{i}$ the group i mean and $\bar X$ all samples mean. Therefore :
