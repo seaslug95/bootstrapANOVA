@@ -13,8 +13,8 @@ $$\text{SS(total)} = \sum_{i=1}^m \sum_{j=1}^{n_i} (X_{ij} - \bar X)^2$$
 
 Where m is the number of groups we compare, ${n_i}$ the number of samples in group i, $\bar X_{i}$ the group i mean and $\bar X$ all samples mean. Therefore :
 $$\text{SS(total)} = \sum_{i=1}^m \sum_{j=1}^{n_i} ((X_{ij} - \bar X_{i}) + (\bar X_{i} - \bar X))^2$$
-$$= \sum_{i=1}^m \sum_{j=1}^{n_i} (X_{ij} - \bar X_{i})^2 + \sum_{i=1}^m \sum_{j=1}^{n_i} (\bar X_{i} - \bar X)^2
-- 2\sum_{i=1}^m (\bar X_{i} - \bar X) \sum_{j=1}^{n_i} (X_{ij} - \bar X_{i})$$
+$$= \sum_{i=1}^m \sum_{j=1}^{n_i} (X_{ij} - \bar X_{i})^2 + \sum_{i=1}^m \sum_{j=1}^{n_i} (\bar X_{i} - \bar X)^2$$
+$$- 2\sum_{i=1}^m (\bar X_{i} - \bar X) \sum_{j=1}^{n_i} (X_{ij} - \bar X_{i})$$
 $$= \text{SS(within)} + \text{SS(between)}$$
 
 
