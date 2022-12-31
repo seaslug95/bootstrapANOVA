@@ -1,9 +1,23 @@
-# generate bootstrap annova
+### Packages
 import itertools
 import numpy as np
-from scipy.stats import f_oneway
+from scipy import stats
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import math
 
-np.random.seed(seed=1)
+### Parameters
+n_pval = 25
+# np.random.seed(seed=1)
+
+### Functions
+def fpval(pval:float) -> str:
+    """Returns formatted pvalue"""
+    magnitude = int(math.floor(math.log10(pval)))
+    mantissa = pval / 10**magnitude
+    res = f"{mantissa:.2f}E{magnitude}"
+    return res
 
 def sumSquares(sample:list) -> float:
     """Returns sum of squared differences from sample mean"""
@@ -39,17 +53,40 @@ def pvalBootAnova(samples:list, num_samples=10000):
     p_value = np.sum(np.abs(boot_fstats) >= np.abs(original_fstat)) / len(boot_fstats)
     return p_value
 
+### Script
+pval_ONEWAY = []
+pval_BOOTS = []
+for i in range(n_pval):
+    # Generate 5 groups of samples
+    mean1, sd1, size1 = 0.7, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    mean2, sd2, size2 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    mean3, sd3, size3 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    mean4, sd4, size4 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    mean5, sd5, size5 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    sample1 = list(np.random.normal(loc=mean1, scale=sd1, size=size1))
+    sample2 = list(np.random.normal(loc=mean2, scale=sd2, size=size2))
+    sample3 = list(np.random.normal(loc=mean3, scale=sd3, size=size3))
+    sample4 = list(np.random.normal(loc=mean4, scale=sd4, size=size4))
+    sample5 = list(np.random.normal(loc=mean5, scale=sd5, size=size5))
+    samples = [sample1, sample2, sample3, sample4, sample5]
 
-mean1, sd1, size1 = 0, 1, 50
-mean2, sd2, size2 = 0, 1, 100
-mean3, sd3, size3 = 0, 1, 100
-sample1 = list(np.random.normal(loc=mean1, scale=sd1, size=size1))
-sample2 = list(np.random.normal(loc=mean2, scale=sd2, size=size2))
-sample3 = list(np.random.normal(loc=mean3, scale=sd3, size=size3))
-samples = [sample1, sample2, sample3]
+    # Compute bootstrapped and oneway ANOVA p values
+    pvalue_boots = pvalBootAnova(samples=samples)
+    pval_BOOTS.append(pvalue_boots)
+    ttest, pvalue_anova = stats.f_oneway(sample1, sample2, sample3, sample4, sample5)
+    pval_ONEWAY.append(pvalue_anova)
+    
+data = pd.DataFrame({'pval ONEWAY': pval_ONEWAY, 'pval BOOTS': pval_BOOTS})
 
-pvalue_boot = pvalBootAnova(samples=samples)
-print('pvalue_boots :',pvalue_boot)
+# Fit a linear regression model
+slope, intercept, r_value, p_value, std_err = stats.linregress(x=np.array(pval_ONEWAY), y=np.array(pval_BOOTS))
 
-ttest, pvalue_anova = f_oneway(sample1, sample2, sample3)
-print('pvalue_anova :',pvalue_anova)
+# Create a regression plot using seaborn
+sns.regplot(x='pval ONEWAY', y='pval BOOTS', data=data, ci=None)
+
+# Add the R-squared and p-value to the plot
+text = f'R2 : {r_value**2:.3f}\npval : {fpval(p_value)}'
+plt.text(0.6, 0.2, text, transform=plt.gca().transAxes)
+
+# Show the plot
+plt.show()
