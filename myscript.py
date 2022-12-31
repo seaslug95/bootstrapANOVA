@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import math
+sns.set_theme(style='darkgrid')
 
 ### Parameters
-n_pval = 25
+n_pval = 50
 # np.random.seed(seed=1)
 
 ### Functions
@@ -58,7 +59,7 @@ pval_ONEWAY = []
 pval_BOOTS = []
 for i in range(n_pval):
     # Generate 5 groups of samples
-    mean1, sd1, size1 = 0.7, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
+    mean1, sd1, size1 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
     mean2, sd2, size2 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
     mean3, sd3, size3 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
     mean4, sd4, size4 = 0, 1 + np.random.uniform(-0.5, 0.5), np.random.randint(50, 150)
@@ -83,6 +84,8 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(x=np.array(pval_O
 
 # Create a regression plot using seaborn
 sns.regplot(x='pval ONEWAY', y='pval BOOTS', data=data, ci=None)
+sns.jointplot(x='pval ONEWAY', y='pval BOOTS', data=data, kind="reg", ci=None, marginal_kws={"bins": np.arange(0, 1.00000001, 0.05)})
+sns.lineplot(x='pval ONEWAY', y='pval ONEWAY', data=data, linestyle="--", color="red", linewidth=1)
 
 # Add the R-squared and p-value to the plot
 text = f'R2 : {r_value**2:.3f}\npval : {fpval(p_value)}'
