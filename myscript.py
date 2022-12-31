@@ -84,8 +84,8 @@ slope, intercept, r_value, p_value, std_err = stats.linregress(x=np.array(pval_O
 
 # Create a regression plot using seaborn
 sns.regplot(x='pval ONEWAY', y='pval BOOTS', data=data, ci=None)
-sns.jointplot(x='pval ONEWAY', y='pval BOOTS', data=data, kind="reg", ci=None, marginal_kws={"bins": np.arange(0, 1.00000001, 0.05)})
-sns.lineplot(x='pval ONEWAY', y='pval ONEWAY', data=data, linestyle="--", color="red", linewidth=1)
+sns.jointplot(x='pval ONEWAY', y='pval BOOTS', data=data, kind='reg', ci=None, marginal_kws={'bins': np.arange(0, 1.00000001, 0.05)})
+sns.lineplot(x='pval ONEWAY', y='pval ONEWAY', data=data, linestyle='--', color='red', linewidth=1)
 
 # Add the R-squared and p-value to the plot
 text = f'R2 : {r_value**2:.3f}\npval : {fpval(p_value)}'
