@@ -7,11 +7,11 @@ import seaborn as sns
 import pandas as pd
 import math
 import mymodule
-sns.set_theme(style='darkgrid')
 
 ### Parameters
 n_pval = 100
-# np.random.seed(seed=1)
+
+np.random.seed(seed=1) # Reproducibility
 
 ### Script
 pval_ONEWAY = []
