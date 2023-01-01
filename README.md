@@ -24,9 +24,11 @@ $$= \text{SS(within)} + \text{SS(between)}$$
 
 ## Results
 ![Regression plot](./results/Figure_reg.png)
+
 *Figure 1 : Relationship between pvalues coming from one-way ANOVA and pvalues coming from bootstrapped ANOVA (n=100).*
 
 ![Histogram plot](./results/Figure_hist.png)
+
 *Figure 2 : Distribution of pvalues differences between pvalues coming from one-way ANOVA and pvalues coming from bootstrapped ANOVA (n=100).*
 
 ## Details
